@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function AvailablePlaces({ onSelectPlace }) {
   const [availablePlaces, setAvailablePlaces] = useState([]);
-
+  // use useEffect to stop the infinite loop
   useEffect(() => {
     fetch("http://localhost:3000/places")
       .then((res) => {
