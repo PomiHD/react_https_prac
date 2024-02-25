@@ -6,8 +6,10 @@ function Modal({ open, children, onClose }) {
 
   useEffect(() => {
     if (open) {
+      // @ts-ignore
       dialog.current.showModal();
     } else {
+      // @ts-ignore
       dialog.current.close();
     }
   }, [open]);

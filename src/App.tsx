@@ -65,6 +65,8 @@ function App() {
           fallbackText="Select the places you would like to visit below."
           places={userPlaces}
           onSelectPlace={handleStartRemovePlace}
+          isLoading={undefined}
+          loadingText={undefined}
         />
 
         <AvailablePlaces onSelectPlace={handleSelectPlace} />
