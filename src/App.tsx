@@ -42,7 +42,7 @@ function App() {
       console.log(error.message);
       setErrorUpdatingPlaces({
         message:
-          error.message || "Failed update places. Please try again later.",
+          error.message || "Failed to update places. Please try again later.",
       });
     }
   }
@@ -56,13 +56,30 @@ function App() {
   //   );
   // }
 
-  const handleRemovePlace = useCallback(async function handleRemovePlace() {
-    setUserPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current.id),
-    );
+  const handleRemovePlace = useCallback(
+    async function handleRemovePlace() {
+      setUserPlaces((prevPickedPlaces) =>
+        prevPickedPlaces.filter(
+          (place) => place.id !== selectedPlace.current.id,
+        ),
+      );
+      try {
+        await updateUserPlaces(
+          userPlaces.filter((place) => place.id !== selectedPlace.current.id),
+        );
+      } catch (error) {
+        // Revert the state if the request fails
+        setUserPlaces(userPlaces);
+        setErrorUpdatingPlaces({
+          message:
+            error.message || "Failed to delete places. Please try again later.",
+        });
+      }
 
-    setModalIsOpen(false);
-  }, []);
+      setModalIsOpen(false);
+    },
+    [userPlaces],
+  );
 
   function handelErrorUpdatingPlaces() {
     setErrorUpdatingPlaces(null);
